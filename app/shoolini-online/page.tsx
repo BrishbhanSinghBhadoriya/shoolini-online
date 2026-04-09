@@ -1,16 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import Header from "./components/header";
-import HeroSection from "./components/HeroSection";
-import Accreditation from "./components/Accreditation";
-import CourseCards from "./components/CourseCards";
-import ShooliniCard from "./components/About";
-import WhyChooseSection from "./components/Whychoose";
-import Placement from "./components/placement";
-import FAQ from "./components/FAQ";
-import Footer from "./components/Footer";
-import EnquiryModal from "./components/EnquiryModal";
+import Header from "@/app/components/header";
+import HeroSection from "@/app/components/HeroSection";
+import Accreditation from "@/app/components/Accreditation";
+import CourseCards from "@/app/components/CourseCards";
+import ShooliniCard from "@/app/components/About";
+import WhyChooseSection from "@/app/components/Whychoose";
+import Placement from "@/app/components/placement";
+import FAQ from "@/app/components/FAQ";
+import Footer from "@/app/components/Footer";
+import EnquiryModal from "@/app/components/EnquiryModal";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <main>
       <Header onOpenModal={() => openModal()} />
-      <HeroSection onOpenModal={() => openModal()} />
+      <HeroSection onOpenModal={() => openModal()} campaign="Meta_search" />
       <Accreditation />
       <CourseCards onOpenModal={(course) => openModal(course)} />
       <ShooliniCard onOpenModal={() => openModal()} />
@@ -41,8 +41,9 @@ export default function Home() {
         isOpen={isModalOpen} 
         onClose={closeModal} 
         courseName={selectedCourse}
-        campaign="Google_search"
+        campaign="Meta_search"
       />
     </main>
   );
 }
+
