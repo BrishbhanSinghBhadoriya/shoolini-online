@@ -32,6 +32,6 @@ const EnquirySchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
+}, { collection: process.env.MONGODB_COLLECTION || "enquiries" }); // Use collection name from .env.local
 
 export default mongoose.models.Enquiry || mongoose.model("Enquiry", EnquirySchema);

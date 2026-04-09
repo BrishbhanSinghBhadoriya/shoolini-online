@@ -20,9 +20,15 @@ async function dbConnect() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      dbName: process.env.MONGODB_DB || "Shoolini_online", // Use DB name from .env.local
     };
 
     cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
+      console.log("----------------------------------------");
+      console.log("✅ CONNECTED TO MONGODB SUCCESSFULLY");
+      console.log("Host:", mongoose.connection.host);
+      console.log("Database Name:", mongoose.connection.name);
+      console.log("----------------------------------------");
       return mongoose;
     });
   }
