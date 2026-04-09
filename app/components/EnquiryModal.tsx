@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface EnquiryModalProps {
   isOpen: boolean;
@@ -11,6 +11,7 @@ interface EnquiryModalProps {
 }
 
 const EnquiryModal = ({ isOpen, onClose, courseName = "", campaign = "" }: EnquiryModalProps) => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,7 +22,6 @@ const EnquiryModal = ({ isOpen, onClose, courseName = "", campaign = "" }: Enqui
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   useEffect(() => {
     setFormData((prev) => ({ 
@@ -38,34 +38,38 @@ const EnquiryModal = ({ isOpen, onClose, courseName = "", campaign = "" }: Enqui
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitStatus("idle");
 
-    try {
-      const response = await axios.post("/api/enquiry", formData);
-      if (response.status === 201) {
-        setSubmitStatus("success");
-        setTimeout(() => {
-          onClose();
-          setSubmitStatus("idle");
-          setFormData({ 
-            name: "", 
-            email: "", 
-            phone: "", 
-            course: courseName, 
-            state: "",
-            campaign: campaign 
-          });
-        }, 2000);
-      }
-    } catch (error) {
-      console.error("Submission error:", error);
-      setSubmitStatus("error");
-    } finally {
+    // 1. Close modal and redirect immediately
+    onClose();
+    router.push("/thank-you");
+
+    // 2. Send data in background (using fetch with keepalive to ensure completion)
+    fetch("/api/enquiry", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+      keepalive: true,
+    }).catch((error) => {
+      console.error("Background submission error:", error);
+    });
+
+    // Reset form after a slight delay
+    setTimeout(() => {
+      setFormData({ 
+        name: "", 
+        email: "", 
+        phone: "", 
+        course: courseName, 
+        state: "",
+        campaign: campaign 
+      });
       setIsSubmitting(false);
-    }
+    }, 100);
   };
 
   return (
@@ -90,19 +94,8 @@ const EnquiryModal = ({ isOpen, onClose, courseName = "", campaign = "" }: Enqui
             From Higher Experience Counselor
           </p>
 
-          {submitStatus === "success" ? (
-            <div className="text-center py-10">
-              <div className="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <h4 className="text-xl font-bold text-gray-800">Thank You!</h4>
-              <p className="text-gray-600">Our counselor will contact you soon.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
                 required
                 type="text"
                 name="name"
@@ -135,14 +128,14 @@ const EnquiryModal = ({ isOpen, onClose, courseName = "", campaign = "" }: Enqui
                 name="course"
                 value={formData.course}
                 onChange={handleChange}
-                className="w-full p-4 rounded-xl bg-gray-100 outline-none text-gray-700 font-medium focus:ring-2 focus:ring-[#ff2b57]/20 transition appearance-none"
+                className="w-full p-4 rounded-xl bg-gray-100 outline-none text-black font-medium focus:ring-2 focus:ring-[#ff2b57]/20 transition appearance-none"
               >
                 <option value="">Select Your Course</option>
                 <option value="MBA">MBA</option>
                 <option value="MCA">MCA</option>
                 <option value="MA">MA</option>
-                <option value="BCOM">BCOM</option>
                 <option value="BBA">BBA</option>
+                <option value="BCOM">BCOM</option>                
                 <option value="BCA">BCA</option>
               </select>
 
@@ -151,7 +144,7 @@ const EnquiryModal = ({ isOpen, onClose, courseName = "", campaign = "" }: Enqui
                 name="state"
                 value={formData.state}
                 onChange={handleChange}
-                className="w-full p-4 rounded-xl bg-gray-100 outline-none text-gray-700 font-medium focus:ring-2 focus:ring-[#ff2b57]/20 transition appearance-none"
+                className="w-full p-4 rounded-xl bg-gray-100 outline-none text-black font-medium focus:ring-2 focus:ring-[#ff2b57]/20 transition appearance-none"
               >
                 <option value="">Select Your State</option>
                 <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -184,16 +177,10 @@ const EnquiryModal = ({ isOpen, onClose, courseName = "", campaign = "" }: Enqui
                 <option value="West Bengal">West Bengal</option>
               </select>
 
-              <p className="text-[10px] text-gray-400 leading-tight">
+              <p className="text-[10px] text-black leading-tight">
                 I authorize a representative to contact me via phone and/or email.
                 This will override registry on DND/NDNC.
               </p>
-
-              {submitStatus === "error" && (
-                <p className="text-red-500 text-xs text-center font-medium">
-                  Failed to submit. Please try again.
-                </p>
-              )}
 
               <button 
                 disabled={isSubmitting}
@@ -208,7 +195,6 @@ const EnquiryModal = ({ isOpen, onClose, courseName = "", campaign = "" }: Enqui
                 ) : "Apply Now"}
               </button>
             </form>
-          )}
         </div>
       </div>
     </div>
