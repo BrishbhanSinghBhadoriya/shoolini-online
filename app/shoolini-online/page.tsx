@@ -29,10 +29,18 @@ export default function Home() {
     <main>
       <Header onOpenModal={() => openModal()} />
       <HeroSection onOpenModal={() => openModal()} campaign="Meta_search" />
-      <Accreditation />
-      <CourseCards onOpenModal={(course) => openModal(course)} />
-      <ShooliniCard onOpenModal={() => openModal()} />
-      <WhyChooseSection />
+      <div id="approvals">
+        <Accreditation />
+      </div>
+      <div id="course">
+        <CourseCards onOpenModal={(course) => openModal(course)} />
+      </div>
+      <div id="about">
+        <ShooliniCard onOpenModal={() => openModal()} />
+      </div>
+      <div id="why-us">
+        <WhyChooseSection />
+      </div>
       <Placement />
       <FAQ />
       <Footer />

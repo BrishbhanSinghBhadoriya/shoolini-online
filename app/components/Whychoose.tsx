@@ -12,16 +12,16 @@ const Card: React.FC<CardProps> = ({ title, desc, variant }) => {
 
   return (
     <div
-      className={`p-10 md:p-12 flex flex-col justify-center h-full rounded-md ${
+      className={`p-6 md:p-12 flex flex-col justify-center h-full ${
         isPrimary
           ? "bg-[#ff2b57] text-white"
           : "bg-[#e9e2dd] text-[#2d2d2d]"
       }`}
     >
-      <h3 className="text-2xl md:text-3xl font-semibold mb-4">
+      <h3 className="text-lg md:text-3xl font-semibold mb-2 md:mb-4 leading-tight">
         {title}
       </h3>
-      <p className="text-base md:text-lg leading-relaxed opacity-90">
+      <p className="text-xs md:text-lg leading-relaxed opacity-90">
         {desc}
       </p>
     </div>
@@ -30,10 +30,10 @@ const Card: React.FC<CardProps> = ({ title, desc, variant }) => {
 
 export default function WhyChooseSection() {
   return (
-    <div className="bg-[#f3f3f3] py-16 px-4 md:px-10">
+    <div className="bg-[#f3f3f3] py-16 px-2 md:px-10">
       {/* Heading */}
       <div className="text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-bold">
+        <h2 className="text-3xl md:text-5xl font-bold">
           <span className="text-[#ff2b57]">Why Choose</span>
           <br />
           <span className="text-[#2d2d2d]">
@@ -43,7 +43,7 @@ export default function WhyChooseSection() {
       </div>
 
       {/* Grid */}
-      <div className="grid md:grid-cols-2 gap-0 max-w-8xl mx-auto overflow-hidden rounded-lg">
+      <div className="grid grid-cols-2 gap-0 max-w-8xl mx-auto overflow-hidden rounded-lg">
         <Card
           variant="primary"
           title="Personalised Mentorship"

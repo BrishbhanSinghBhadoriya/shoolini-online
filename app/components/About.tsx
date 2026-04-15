@@ -10,10 +10,9 @@ export default function ShooliniCard({ onOpenModal }: ShooliniCardProps) {
       <div className="max-w-6xl w-full grid md:grid-cols-2 gap-8 items-center">
         {/* LEFT TEXT */}
         <div>
-          <h1 className="text-4xl md:text-5xl font-bold text-[#ff3b5c] leading-tight">
-            Shoolini Online <br />
-            <span className="text-[#ff5fa2]">JEETO CAREER KI RACE</span>
-          </h1>
+        <h1 className="text-2xl md:text-5xl font-bold bg-gradient-to-r from-[#ff3b5c] to-[#ff5fa2] bg-clip-text text-transparent leading-tight">
+  Shoolini Online JEETO CAREER KI RACE
+</h1>
 
           <p className="mt-6 text-black leading-relaxed text-lg">
             Shoolini University Online is a leader in outcome-based education,

@@ -83,12 +83,24 @@ const HeroSection = ({ onOpenModal, campaign = "Google_search" }: HeroSectionPro
             MBA | MCA | MA | BCOM | BBA | BCA
           </p>
 
+          {/* Desktop Button */}
           <button
             onClick={onOpenModal}
-            className="bg-[#ff2b57] text-white px-6 py-3 rounded-lg font-semibold shadow hover:opacity-90 transition w-fit"
+            className="hidden md:block bg-[#ff2b57] text-white px-6 py-3 rounded-lg font-semibold shadow hover:opacity-90 transition w-fit"
           >
             Download Brochure
           </button>
+
+          {/* Mobile Image */}
+          <div className="md:hidden w-full flex justify-center">
+            <Image
+              src="/university-logo.jpg"
+              alt="University Logo"
+              width={350}
+              height={180}
+              className="object-contain rounded-lg shadow-sm"
+            />
+          </div>
         </div>
 
         {/* ✅ CENTER IMAGE (FULL HEIGHT MATCH) */}

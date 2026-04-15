@@ -66,12 +66,14 @@ const CourseCards = ({ onOpenModal }: CourseCardsProps) => {
               className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 flex flex-col"
             >
               {/* Top Image Section */}
-              <div className="relative h-48 w-full overflow-hidden">
+              <div className="relative aspect-[16/9] w-full bg-gray-50 overflow-hidden">
                 <Image
                   src={course.image}
                   alt={course.title}
                   fill
-                  className="object-cover"
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority={index < 3}
                 />
               </div>
 
