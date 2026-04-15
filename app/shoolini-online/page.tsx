@@ -11,6 +11,7 @@ import Placement from "@/app/components/placement";
 import FAQ from "@/app/components/FAQ";
 import Footer from "@/app/components/Footer";
 import EnquiryModal from "@/app/components/EnquiryModal";
+import StickyFooter from "@/app/components/StickyFooter";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,6 +52,8 @@ export default function Home() {
         courseName={selectedCourse}
         campaign="Meta_search"
       />
+
+      <StickyFooter onOpenModal={() => openModal()} />
     </main>
   );
 }

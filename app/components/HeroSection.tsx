@@ -31,7 +31,9 @@ const HeroSection = ({ onOpenModal, campaign = "Google_search" }: HeroSectionPro
     e.preventDefault();
     setIsSubmitting(true);
 
-    // 1. Immediately redirect to thank-you page
+    // 1. Open WhatsApp and redirect to thank-you page
+    const whatsappUrl = `https://wa.me/917042646766?text=Hi, I am interested in ${formData.course || "Shoolini Online Programs"}. My name is ${formData.name}.`;
+    window.open(whatsappUrl, "_blank");
     router.push("/thank-you");
 
     // 2. Send data in background (using fetch with keepalive to ensure completion)
