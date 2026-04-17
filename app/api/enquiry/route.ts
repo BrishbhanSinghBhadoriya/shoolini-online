@@ -41,7 +41,7 @@ export async function POST(req: Request) {
         params.append("state", state);
         params.append("university", university);
         params.append("campaign", campaign);
-        params.append("source", "Website Enquiry Form");
+       
         
         // Also include previous names as fallback
         params.append("full_name", name);

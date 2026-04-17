@@ -42,10 +42,8 @@ const EnquiryModal = ({ isOpen, onClose, courseName = "", campaign = "" }: Enqui
     e.preventDefault();
     setIsSubmitting(true);
 
-    // 1. Close modal and redirect to WhatsApp
+    // 1. Close modal and redirect to thank you page
     onClose();
-    const whatsappUrl = `https://wa.me/917042646766?text=Hi, I am interested in ${formData.course || "Shoolini Online Programs"}. My name is ${formData.name}.`;
-    window.open(whatsappUrl, "_blank");
     router.push("/thank-you");
 
     // 2. Send data in background (using fetch with keepalive to ensure completion)
