@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/header";
 import HeroSection from "./components/HeroSection";
 import Accreditation from "./components/Accreditation";
@@ -16,6 +16,14 @@ import StickyFooter from "./components/StickyFooter";
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsModalOpen(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const openModal = (course = "") => {
     setSelectedCourse(course);
